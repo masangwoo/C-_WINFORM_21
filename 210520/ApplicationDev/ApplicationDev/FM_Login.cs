@@ -40,6 +40,9 @@ namespace ApplicationDev
             string sLoinid = string.Empty;//로그인ID
             string sLoinPw = string.Empty;
 
+            sLoinid = txt_ID.Text;
+            sLoinPw = txt_Password.Text;
+
             SqlDataAdapter Adapter = new SqlDataAdapter("SELECT PW FROM TB_USER_MSW WHERE USERID = '" + sLoinid + "'", Connect);
 
             //데이터를 담을 그릇
