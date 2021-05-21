@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,14 @@ namespace ApplicationDev
         public FM_Login()
         {
             InitializeComponent();
+            this.Tag = "FAIL";//tag가 fail이 고정, 성공하면 사용자 이름이 들어온다
         }
-
+        private int PwFailCount = 0;
         private void button1_Click(object sender, EventArgs e)
         {
-            string strCon = "Data Source=61.105.9.203;Initial Catalog=AppDev;User ID=kfqs;Password=1234";
+            try
+            {
+                string strCon = "Data Source=61.105.9.203;Initial Catalog=AppDev;User ID=kfqs;Password=1234";
 
             Connect = new SqlConnection(strCon);
 
@@ -50,11 +54,27 @@ namespace ApplicationDev
 
             //어댑터 실행 후 그릇에 데이터 담기
             Adapter.Fill(DtTemp);
-
+     
             //데이터가 없는 경우 사용자가 없다고 메세지 및 리턴
             if (DtTemp.Rows.Count == 0)
             {
                 MessageBox.Show("등록되지 않은 사용자 입니다.");
+                txt_ID.Text="";//아이디 비워놓
+                txt_Password.Focus();
+                return;
+            }
+
+            else if (DtTemp.Rows[0]["PW"].ToString() != sLoinPw)
+            {
+                //txt_ID.Text = "";//아이디 비워놓
+                txt_Password.Focus();
+                PwFailCount += 1;
+                MessageBox.Show("비밀번호가 일치하지 않습니다. [" + (PwFailCount) + "회 오류]");
+                if (PwFailCount==3)
+                {
+                    MessageBox.Show("비밀번호 오류 3회로 프로그램 종료");
+                    this.Close();
+                }
                 return;
             }
 
@@ -62,10 +82,25 @@ namespace ApplicationDev
             else if (DtTemp.Rows[0]["PW"].ToString() == sLoinPw)
             {
                 MessageBox.Show("환영합니다.");
-                return;
+                    this.Close();
+                }
+
+            else
+                {
+                    this.Tag = DtTemp.Rows[0]["USERNAME"].ToString(); // 유저 명을 메인화면으로 보냄
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("로그인 작업중 오류가 발생하였습니다." + ex.ToString());
+            }
+            finally
+            {
+                Connect.Close();
             }
 
-            else { return; }
+
         }
 
         private void txt_Password_TextChanged(object sender, EventArgs e)
@@ -82,6 +117,14 @@ namespace ApplicationDev
             this.Visible = true;
 
 
+        }
+
+        private void txt_Password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                button1_Click(null, null);
+            }
         }
     }
 }

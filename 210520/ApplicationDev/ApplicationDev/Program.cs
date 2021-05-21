@@ -17,7 +17,7 @@ namespace ApplicationDev
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FM_Login());
+            Application.Run(new FM_Main());
         }
     }
 }

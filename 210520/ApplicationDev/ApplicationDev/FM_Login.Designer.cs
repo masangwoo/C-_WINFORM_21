@@ -71,6 +71,7 @@ namespace ApplicationDev
             this.txt_Password.Size = new System.Drawing.Size(482, 27);
             this.txt_Password.TabIndex = 3;
             this.txt_Password.TextChanged += new System.EventHandler(this.txt_Password_TextChanged);
+            this.txt_Password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Password_KeyDown);
             // 
             // btn_login
             // 
@@ -78,6 +79,7 @@ namespace ApplicationDev
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(138, 62);
             this.btn_login.TabIndex = 4;
+            this.btn_login.Tag = "USERNAME";
             this.btn_login.Text = "로그인";
             this.btn_login.UseVisualStyleBackColor = true;
             this.btn_login.Click += new System.EventHandler(this.button1_Click);
@@ -92,7 +94,7 @@ namespace ApplicationDev
             this.btn_pwchange.UseVisualStyleBackColor = true;
             this.btn_pwchange.Click += new System.EventHandler(this.btn_pwchange_Click);
             // 
-            // Form1
+            // FM_Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -103,7 +105,7 @@ namespace ApplicationDev
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txt_ID);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "FM_Login";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
