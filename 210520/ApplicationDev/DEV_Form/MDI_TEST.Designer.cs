@@ -43,16 +43,18 @@ namespace DEV_Form
             this.label1.Text = "간장공장공장장\r\n";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // Form1
+            // MDI_TEST
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(405, 563);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("궁서체", 15F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MDI_TEST";
+            this.Text = "MDI_TEST";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

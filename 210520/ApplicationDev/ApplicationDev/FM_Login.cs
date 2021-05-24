@@ -28,7 +28,7 @@ namespace ApplicationDev
         {
             try
             {
-                string strCon = "Data Source=61.105.9.203;Initial Catalog=AppDev;User ID=kfqs;Password=1234";
+                string strCon = "Data Source=61.105.9.203;Initial Catalog=AppDev;User ID=kfqs1;Password=1234";
 
             Connect = new SqlConnection(strCon);
 
