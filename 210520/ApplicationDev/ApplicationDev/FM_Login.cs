@@ -47,7 +47,7 @@ namespace ApplicationDev
             sLoinid = txt_ID.Text;
             sLoinPw = txt_Password.Text;
 
-            SqlDataAdapter Adapter = new SqlDataAdapter("SELECT PW FROM TB_USER_MSW WHERE USERID = '" + sLoinid + "'", Connect);
+            SqlDataAdapter Adapter = new SqlDataAdapter("SELECT PW,username FROM TB_USER_MSW WHERE USERID = '" + sLoinid + "'", Connect);
 
             //데이터를 담을 그릇
             DataTable DtTemp = new DataTable();
@@ -66,6 +66,7 @@ namespace ApplicationDev
 
             else if (DtTemp.Rows[0]["PW"].ToString() != sLoinPw)
             {
+
                 //txt_ID.Text = "";//아이디 비워놓
                 txt_Password.Focus();
                 PwFailCount += 1;
@@ -82,14 +83,13 @@ namespace ApplicationDev
             else if (DtTemp.Rows[0]["PW"].ToString() == sLoinPw)
             {
                 MessageBox.Show("환영합니다.");
-                    this.Close();
-                }
-
-            else
-                {
+                    DEV_Form.Common.LogInId = txt_ID.Text;
+                    DEV_Form.Common.LogInName = DtTemp.Rows[0]["USERNAME"].ToString();//유저 명을 common에 등록함
                     this.Tag = DtTemp.Rows[0]["USERNAME"].ToString(); // 유저 명을 메인화면으로 보냄
-                    this.Close();
-                }
+                    this.Close(); 
+            }
+
+            
             }
             catch (Exception ex)
             {

@@ -34,7 +34,9 @@ namespace ApplicationDev
             this.M_SYSTEM = new System.Windows.Forms.ToolStripMenuItem();
             this.MDI_TEST = new System.Windows.Forms.ToolStripMenuItem();
             this.MDI_TEST2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CUSTOM = new System.Windows.Forms.ToolStripMenuItem();
             this.FM_ITEM = new System.Windows.Forms.ToolStripMenuItem();
+            this.FM_CUSTOMER = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.stbSearch = new System.Windows.Forms.ToolStripButton();
             this.stbInsert = new System.Windows.Forms.ToolStripButton();
@@ -69,7 +71,8 @@ namespace ApplicationDev
             this.M_SYSTEM.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MDI_TEST,
             this.MDI_TEST2,
-            this.FM_ITEM});
+            this.FM_ITEM,
+            this.FM_CUSTOMER});
             this.M_SYSTEM.Name = "M_SYSTEM";
             this.M_SYSTEM.Size = new System.Drawing.Size(98, 24);
             this.M_SYSTEM.Text = "시스템관리";
@@ -85,15 +88,31 @@ namespace ApplicationDev
             // 
             // MDI_TEST2
             // 
+            this.MDI_TEST2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CUSTOM});
             this.MDI_TEST2.Name = "MDI_TEST2";
             this.MDI_TEST2.Size = new System.Drawing.Size(228, 26);
             this.MDI_TEST2.Text = "오예";
+            this.MDI_TEST2.Click += new System.EventHandler(this.MDI_TEST2_Click);
+            // 
+            // CUSTOM
+            // 
+            this.CUSTOM.Name = "CUSTOM";
+            this.CUSTOM.Size = new System.Drawing.Size(228, 26);
+            this.CUSTOM.Text = "toolStripMenuItem1";
             // 
             // FM_ITEM
             // 
             this.FM_ITEM.Name = "FM_ITEM";
             this.FM_ITEM.Size = new System.Drawing.Size(228, 26);
             this.FM_ITEM.Text = "toolStripMenuItem1";
+            // 
+            // FM_CUSTOMER
+            // 
+            this.FM_CUSTOMER.Name = "FM_CUSTOMER";
+            this.FM_CUSTOMER.Size = new System.Drawing.Size(228, 26);
+            this.FM_CUSTOMER.Text = "Customer";
+            this.FM_CUSTOMER.Click += new System.EventHandler(this.CUSTOMER_Click);
             // 
             // toolStrip
             // 
@@ -292,5 +311,7 @@ namespace ApplicationDev
         private System.Windows.Forms.ToolStripMenuItem MDI_TEST2;
         private MyTabControl myTabControl1;
         private System.Windows.Forms.ToolStripMenuItem FM_ITEM;
+        private System.Windows.Forms.ToolStripMenuItem CUSTOM;
+        private System.Windows.Forms.ToolStripMenuItem FM_CUSTOMER;
     }
 }

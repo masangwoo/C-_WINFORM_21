@@ -17,14 +17,16 @@ namespace ApplicationDev
         public FM_Main()
         {
             InitializeComponent();
+            //로그인 폼 호출
             FM_Login Login = new FM_Login();
             Login.ShowDialog();
+
             tssUserName.Text = Login.Tag.ToString();
             if (Login.Tag.ToString() == "FAIL")//태그가 fail일 때 종료
             {
-               Application.ExitThread();
+                Application.ExitThread();
                 Application.Exit();
-              //  System.Environment.Exit(0);
+                //  System.Environment.Exit(0);
             }
 
             this.stbExit.Click += new System.EventHandler(this.stbExit_Click);
@@ -120,7 +122,15 @@ namespace ApplicationDev
 
         }
 
-      
+        private void MDI_TEST2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CUSTOMER_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public partial class MDIForm : TabPage

@@ -53,6 +53,9 @@ namespace DEV_Form
                 cboItemDesc.ValueMember = "ITEMDESC"; //실제 데이터를 처리할 코드항목
                 cboItemDesc.Text = "";
 
+                //원하는 날짜 픽스
+                dtpStart.Text = string.Format("{0:yyyy-MM-01}", DateTime.Now);
+
             }
             catch (Exception ex)
             {
@@ -122,26 +125,34 @@ namespace DEV_Form
                 if (rdoEnd.Checked == true) sEndFlag = "Y";       //단종여부
                 if (chkNameOnly.Checked == true) sItemCode = "";  //이름으로만 검색
 
-                SqlDataAdapter Adapter = new SqlDataAdapter("SELECT ITEMCODE,  " +
-                                                            "       ITEMNAME,  " +
-                                                            "       ITEMDESC,  " +
-                                                            "       ITEMDESC2, " +
-                                                            "       ENDFLAG,   " +
-                                                            "       PRODDATE,  " +
-                                                            "       MAKEDATE,  " +
-                                                            "       MAKER,     " +
-                                                            "       EDITDATE,  " +
-                                                            "       EDITOR     " +
-                                                            "  FROM TB_TESTITEM_DSH WITH(NOLOCK) " +
+                //조회조건
+                SqlDataAdapter Adapter = new SqlDataAdapter("SELECT ITEMCODE,  "                          +
+                                                            "       ITEMNAME,  "                          +
+                                                            "       ITEMDESC,  "                          +
+                                                            "       ITEMDESC2, "                          +
+                                                            "       CASE WHEN ENDFLAG = 'Y' THEN '단종'" +
+                                                            " WHEN ENDFLAG = 'N' THEN '생산'END AS ENDFLAG, " +
+                                                            "       PRODDATE,  "                          +
+                                                            "       MAKEDATE,  "                          +
+                                                            "       MAKER,     "                          +
+                                                            "       EDITDATE,  "                          +
+                                                            "       EDITOR     "                          +
+                                                            "  FROM TB_TESTITEM_MSW WITH(NOLOCK) "        +
                                                             " WHERE ITEMCODE LIKE '%" + sItemCode + "%' " +
                                                             "   AND ITEMNAME LIKE '%" + sItemName + "%' " +
                                                             "   AND ITEMDESC LIKE '%" + sItemdesc + "%' " +
-                                                            "   AND ENDFLAG  = '" + sEndFlag + "'", Connect);
+                                                            "   AND ENDFLAG  = '" + sEndFlag + "'"         
+                                                          //  "   AND PRODDATE BETWEEN  = '" + sStartDate + "' AND '"+ sEndDate+"'"
+                                                            , Connect);
 
                 DataTable dtTemp = new DataTable();
                 Adapter.Fill(dtTemp);
 
-                if (dtTemp.Rows.Count == 0) return;
+                if (dtTemp.Rows.Count == 0) 
+                {
+                    dgvGrid.DataSource = null;
+                    return;
+                }
                 dgvGrid.DataSource = dtTemp;//데이터 그리드 뷰에 데이터 테이블 등록
 
                 //그리드뷰의 헤더 명칭 선언
@@ -170,9 +181,11 @@ namespace DEV_Form
                 dgvGrid.Columns["EDITOR"].ReadOnly = true;
                 dgvGrid.Columns["EDITDATE"].ReadOnly = true;
 
+          
+
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -232,6 +245,79 @@ namespace DEV_Form
         }
 
         private void btnSave_Click(object sender, EventArgs e)
+        {
+            //선택된 행 데이터 저장
+            if (dgvGrid.Rows.Count == 0) return;
+            if (MessageBox.Show("선택된 데이터를 등록 하시겠습니까?", "데이터 등록", MessageBoxButtons.YesNo) == DialogResult.No) return;
+            string sItemCode = dgvGrid.CurrentRow.Cells["ITEMCODE"].Value.ToString();
+            string sItemName = dgvGrid.CurrentRow.Cells["ITEMNAME"].Value.ToString();
+            string sItemDesc = dgvGrid.CurrentRow.Cells["ITEMDESC"].Value.ToString();
+            string sItemDesc2 = dgvGrid.CurrentRow.Cells["ITEMDESC2"].Value.ToString();
+            string sItemEndFlag = dgvGrid.CurrentRow.Cells["ENDFLAG"].Value.ToString();
+            string sProdDate = dgvGrid.CurrentRow.Cells["PRODDATE"].Value.ToString();
+
+            SqlCommand cmd = new SqlCommand();
+            SqlTransaction Tran;
+
+            Connect = new SqlConnection(strConn);
+            Connect.Open();
+
+            //데이터 조회 후 해당 데이터가 있는지 확인 후 update, insert구문 분기
+            string sSql = "SELECT ITEMCODE  FROM TB_TESTITEM_MSW WHERE ITEMCODE = '"+ sItemCode+ "'";
+            SqlDataAdapter adapter = new SqlDataAdapter(sSql, Connect);
+            DataTable dtTemp = new DataTable();
+            adapter.Fill(dtTemp);
+
+            //트랜잭션 설정
+            Tran = Connect.BeginTransaction("TestTran");
+            cmd.Transaction = Tran;
+            cmd.Connection = Connect;
+
+            cmd.CommandText = "UPDATE TB_TestItem_MSW                                                    " +
+                                      "    SET ITEMNAME = '" + sItemName + "',                       " +
+                                      "        ITEMDESC = '" + sItemDesc + "',                       " +
+                                      "        ITEMDESC2 = '" + sItemDesc2 + "',                     " +
+                                      "        ENDFLAG = '" + "N" + "',                              " +
+                                      "        PRODDATE = '" + sProdDate + "',                       " +
+                                      "        EDITOR = '"    + Common.LogInId + "',         " +
+                                      "        EDITDATE = GETDATE()                                  " +
+                                      "  WHERE ITEMCODE = '" + sItemCode + "'                        " +
+                                      " IF (@@ROWCOUNT =0)                                           " +
+                                      "INSERT INTO TB_TestItem_MSW(ITEMCODE,           ITEMNAME,            ITEMDESC,           ITEMDESC2,          ENDFLAG,           PRODDATE,      MAKEDATE,     MAKER) " +
+                                      "VALUES('" + sItemCode + "','" + sItemName + "','" + sItemDesc + "','" + sItemDesc2 + "','" + "N" + "','" + sProdDate + "',GETDATE(),'')";
+
+            //e데이터가 잇는 경우 update, 없는 경우 insert
+            //if (dtTemp.Rows.Count == 0)
+            //{
+            //    //데이터가 없으니 INSERT해라
+            //    cmd.CommandText = "INSERT INTO TB_TESTITEM_MSW (ITEMCODE,       ITEMNAME,                 ITEMDESC,        ITEMDESC2,         ENDFLAG,                 PRODDATE,      MAKEDATE,   MAKER)" +
+            //                           "                      VALUES ('" + sItemCode + "','" + sItemName + "','" + sItemDesc + "','" + sItemDesc2 + "','" + "N" + "','" + sProdDate + "',GETDATE(),'" + "" + "')";
+
+            //}
+            //else
+            //{ 
+            //    //데이터가 있으니 UPDATE해라
+            //    cmd.CommandText = "UPDATE TB_TESTITEM_MSW                    " +
+            //                      "    SET ITEMNAME = '" + sItemName + "',   " +
+            //                      "        ITEMDESC = '" + sItemDesc + "',   " +
+            //                      "        ITEMDESC2 = '" + sItemDesc2 + "', " +
+            //                      "        ENDFLAG = '" + "N" + "', " +
+            //                      "        PRODDATE = '" + sProdDate + "',   " +
+            //                      "        EDITOR = '',                      " +
+            //                      //"        EDITOR = '"    + Commoncs.LoginUserID + "',  " +
+            //                      "        EDITDATE = GETDATE()     "   +
+            //                      "  WHERE ITEMCODE = '" + sItemCode + "'";
+            //}
+
+            cmd.ExecuteNonQuery();
+
+            //성공시 DB COMMIT
+            Tran.Commit();
+            MessageBox.Show("정상적으로 등록 하였습니다.");
+            Connect.Close();
+        }
+
+        private void chkNameOnly_CheckedChanged(object sender, EventArgs e)
         {
 
         }

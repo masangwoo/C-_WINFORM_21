@@ -98,11 +98,12 @@ namespace DEV_Form
             // 
             // dtpStart
             // 
+            this.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpStart.Location = new System.Drawing.Point(585, 40);
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(164, 27);
             this.dtpStart.TabIndex = 4;
-            this.dtpStart.Value = new System.DateTime(2021, 5, 24, 0, 0, 0, 0);
+            this.dtpStart.Value = new System.DateTime(2021, 5, 25, 10, 24, 57, 0);
             this.dtpStart.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label3
@@ -117,11 +118,12 @@ namespace DEV_Form
             // 
             // dtpEnd
             // 
+            this.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpEnd.Location = new System.Drawing.Point(781, 40);
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(162, 27);
             this.dtpEnd.TabIndex = 4;
-            this.dtpEnd.Value = new System.DateTime(2021, 5, 24, 0, 0, 0, 0);
+            this.dtpEnd.Value = new System.DateTime(2021, 5, 25, 10, 24, 57, 0);
             this.dtpEnd.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label4
@@ -166,6 +168,7 @@ namespace DEV_Form
             this.chkNameOnly.TabIndex = 7;
             this.chkNameOnly.Text = "이름으로만 검색";
             this.chkNameOnly.UseVisualStyleBackColor = true;
+            this.chkNameOnly.CheckedChanged += new System.EventHandler(this.chkNameOnly_CheckedChanged);
             // 
             // rdoProduct
             // 
@@ -252,6 +255,8 @@ namespace DEV_Form
             // 
             // dgvGrid
             // 
+            this.dgvGrid.AllowUserToAddRows = false;
+            this.dgvGrid.AllowUserToDeleteRows = false;
             this.dgvGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dgvGrid.Location = new System.Drawing.Point(3, 65);
@@ -351,7 +356,7 @@ namespace DEV_Form
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FM_ITEM";
-            this.Text = "~";
+            this.Text = "품목 관리";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FM_ITEM_Load);
             this.groupBox1.ResumeLayout(false);
