@@ -37,6 +37,7 @@ namespace ApplicationDev
             this.CUSTOM = new System.Windows.Forms.ToolStripMenuItem();
             this.FM_ITEM = new System.Windows.Forms.ToolStripMenuItem();
             this.FM_CUSTOMER = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fm_Cust_ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.stbSearch = new System.Windows.Forms.ToolStripButton();
             this.stbInsert = new System.Windows.Forms.ToolStripButton();
@@ -72,7 +73,8 @@ namespace ApplicationDev
             this.MDI_TEST,
             this.MDI_TEST2,
             this.FM_ITEM,
-            this.FM_CUSTOMER});
+            this.FM_CUSTOMER,
+            this.Fm_Cust_});
             this.M_SYSTEM.Name = "M_SYSTEM";
             this.M_SYSTEM.Size = new System.Drawing.Size(98, 24);
             this.M_SYSTEM.Text = "시스템관리";
@@ -113,6 +115,13 @@ namespace ApplicationDev
             this.FM_CUSTOMER.Size = new System.Drawing.Size(228, 26);
             this.FM_CUSTOMER.Text = "Customer";
             this.FM_CUSTOMER.Click += new System.EventHandler(this.CUSTOMER_Click);
+            // 
+            // Fm_Cust_
+            // 
+            this.Fm_Cust_.Name = "Fm_Cust_";
+            this.Fm_Cust_.Size = new System.Drawing.Size(228, 26);
+            this.Fm_Cust_.Text = "고객관리";
+            this.Fm_Cust_.Click += new System.EventHandler(this.FM_CUST_Click);
             // 
             // toolStrip
             // 
@@ -166,6 +175,7 @@ namespace ApplicationDev
             this.stbDelete.Text = "삭제";
             this.stbDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.stbDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.stbDelete.Click += new System.EventHandler(this.stbDelete_Click);
             // 
             // stbSave
             // 
@@ -177,6 +187,7 @@ namespace ApplicationDev
             this.stbSave.Text = "저장";
             this.stbSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.stbSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.stbSave.Click += new System.EventHandler(this.stbSave_Click);
             // 
             // toolStripSeparator1
             // 
@@ -313,5 +324,6 @@ namespace ApplicationDev
         private System.Windows.Forms.ToolStripMenuItem FM_ITEM;
         private System.Windows.Forms.ToolStripMenuItem CUSTOM;
         private System.Windows.Forms.ToolStripMenuItem FM_CUSTOMER;
+        private System.Windows.Forms.ToolStripMenuItem Fm_Cust_;
     }
 }

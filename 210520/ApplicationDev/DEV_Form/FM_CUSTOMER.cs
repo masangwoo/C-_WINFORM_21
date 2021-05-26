@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using ApplicationDev;
 
 namespace DEV_Form
 {
@@ -239,19 +240,19 @@ namespace DEV_Form
             cmd.Transaction = Tran;
             cmd.Connection = Connect;
 
-            cmd.CommandText = "UPDATE TB_CUSTOMER_MSW                                                    " +
+            cmd.CommandText = "UPDATE TB_CUSTOMER_MSW                                                " +
                                       "    SET CUSTCODE = '" + sItemCode + "',                       " +
                                       "        CUSTTYPE = '" + sItemName + "',                       " +
-                                      "        CUSTNAME = '" + sItemDesc + "',                     " +
-                                      "        BIZCLASS = '" + sItemDesc2 + "',                              " +
-                                      "        BIZTYPE = '" + sBType + "',                              " +
+                                      "        CUSTNAME = '" + sItemDesc + "',                       " +
+                                      "        BIZCLASS = '" + sItemDesc2 + "',                      " +
+                                      "        BIZTYPE = '" + sBType + "',                           " +
 
-                                      "        USEFLAG = '" + sItemEndFlag + "',                              " +
-                                      "        FIRSTDATE = '" + sProdDate + "',                              " +
-                                      "        MAKEDATE = '" + sMakedate + "',                              " +
-                                      "        MAKER = '" + sMaker + "',                       " +
-                                      "        EDITOR = '" + Common.LogInId + "',         " +
-                                      "        EDITDATE = '" + DateTime.Now + "'                                  " +
+                                      "        USEFLAG = '" + sItemEndFlag + "',                     " +
+                                      "        FIRSTDATE = '" + sProdDate + "',                      " +
+                                      "        MAKEDATE = '" + sMakedate + "',                       " +
+                                      "        MAKER = '" + sMaker + "',                             " +
+                                      "        EDITOR = '" + Common.LogInId + "',                    " +
+                                      "        EDITDATE = '" + DateTime.Now + "'                     " +
                                       "  WHERE CUSTCODE = '" + sItemCode + "'                        " +
                                       " IF (@@ROWCOUNT =0)                                           " +
                                       "INSERT INTO TB_CUSTOMER_MSW(CUSTCODE,           CUSTTYPE,            CUSTNAME,           BIZCLASS,  BIZTYPE  ,     USEFLAG,           FIRSTDATE,      MAKEDATE,     MAKER, EDITOR, EDITDATE) " +

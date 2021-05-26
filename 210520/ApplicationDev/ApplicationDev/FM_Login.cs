@@ -83,8 +83,8 @@ namespace ApplicationDev
             else if (DtTemp.Rows[0]["PW"].ToString() == sLoinPw)
             {
                 MessageBox.Show("환영합니다.");
-                    DEV_Form.Common.LogInId = txt_ID.Text;
-                    DEV_Form.Common.LogInName = DtTemp.Rows[0]["USERNAME"].ToString();//유저 명을 common에 등록함
+                    Common.LogInId = txt_ID.Text;
+                    Common.LogInName = DtTemp.Rows[0]["USERNAME"].ToString();//유저 명을 common에 등록함
                     this.Tag = DtTemp.Rows[0]["USERNAME"].ToString(); // 유저 명을 메인화면으로 보냄
                     this.Close(); 
             }

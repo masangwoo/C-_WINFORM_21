@@ -29,12 +29,19 @@ namespace ApplicationDev
                 //  System.Environment.Exit(0);
             }
 
-            this.stbExit.Click += new System.EventHandler(this.stbExit_Click);
             //메뉴클릭 이벤트 추가
+
+            this.stbExit.Click += new System.EventHandler(this.stbExit_Click);
             this.stbClose.Click += new System.EventHandler(this.stbClose_Click);
-            
+
+            this.stbSearch.Click += new System.EventHandler(this.stbSearch_Click);
+            this.stbInsert.Click += new System.EventHandler(this.stbInsert_Click);
+            this.stbDelete.Click += new System.EventHandler(this.stbDelete_Click);
+            this.stbSave.Click += new System.EventHandler(this.stbSave_Click);
 
         }
+
+
         private void stbClose_Click(object sender, EventArgs e)
         {
             //하나라도 열린 화면이 있어야 닫을 수 있기 때문에 validation
@@ -46,11 +53,24 @@ namespace ApplicationDev
 
         private void stbSearch_Click(object sender, EventArgs e)
         {
-
+            ChildCommand("SEARCH");
         }
 
         private void stbInsert_Click(object sender, EventArgs e)
         {
+            ChildCommand("NEW");
+
+        }
+
+        private void stbDelete_Click(object sender, EventArgs e)
+        {
+            ChildCommand("DELETE");
+
+        }
+
+        private void stbSave_Click(object sender, EventArgs e)
+        {
+            ChildCommand("SAVE");
 
         }
 
@@ -131,7 +151,28 @@ namespace ApplicationDev
         {
 
         }
+
+        private void FM_CUST_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ChildCommand(string Command)
+        {
+            if (this.myTabControl1.TabPages.Count == 0) return;
+            var Child = myTabControl1.SelectedTab.Controls[0] as DEV_Form.ChildInterFace;
+            switch (Command)
+            {
+                case "NEW": Child.DoNew();       break;
+                case "SAVE": Child.Save();       break;
+                case "SEARCH": Child.inquire();  break;
+                case "DELETE": Child.Delete();   break;
+
+            }
+        }
+
     }
+
 
     public partial class MDIForm : TabPage
     {

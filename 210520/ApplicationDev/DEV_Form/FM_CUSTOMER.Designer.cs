@@ -81,7 +81,6 @@ namespace DEV_Form
             this.chkCustOnly.TabIndex = 16;
             this.chkCustOnly.Text = "고객사만 검색";
             this.chkCustOnly.UseVisualStyleBackColor = true;
-  
             // 
             // label2
             // 
@@ -286,6 +285,7 @@ namespace DEV_Form
             this.ClientSize = new System.Drawing.Size(1208, 701);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FM_CUSTOMER";
             this.Text = "FM_CUSTOMER";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
